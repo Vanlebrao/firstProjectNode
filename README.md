@@ -57,6 +57,8 @@ Ferramentas utilizadas para construção do conversor de moedas foram:
         </sub>
       </a>
     </td>
+    </tr>
+    </table>
 
 
   
