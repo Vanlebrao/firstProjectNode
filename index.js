@@ -1,10 +1,12 @@
-const { response } = require('express')
-const express = require('express')
-const uuid = require(`uuid`)
+import express from "express";
+import { v4 } from "uuid";
+import cors from 'cors'
 
-const port = 3000
-const app = express()
-app.use(express.json())
+
+const port = 3001
+const app = express();
+app.use(express.json());
+app.use(cors())
 
 const users = []
 
@@ -21,25 +23,18 @@ const checkUserId = (request, response, next) => {
     request.userId = id
 
     next()
-
 }
-
-
 app.get('/users', (request, response) => {
     return response.json(users)
 })
-
 app.post('/users', (request, response) => {
-    const { name, age } = request.body
-
-    const user = { id: uuid.v4(), name, age }
+    const { name, age } = request.body;
+    const user = { id: v4(), name, age };
 
     users.push(user)
 
-
     return response.status(201).json(user)
 })
-
 app.put('/users/:id', checkUserId, (request, response) => {
     const { name, age } = request.body
     const index = request.userIndex
@@ -50,7 +45,6 @@ app.put('/users/:id', checkUserId, (request, response) => {
     users[index] = updateUser
 
     return response.json(updateUser)
-
 })
 
 app.delete('/users/:id', checkUserId, (request, response) => {
@@ -62,14 +56,6 @@ app.delete('/users/:id', checkUserId, (request, response) => {
     return response.status(204).json
 })
 
-
-
-
-
-
-
-
-
-app.listen(3000, () => {
+app.listen(3001, () => {
     console.log(`Server started on port ${port}`)
 })
